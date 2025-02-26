@@ -18,19 +18,26 @@ api_hash = user_api_hash if user_api_hash else DEFAULT_API_HASH
 # Создаем клиент
 client = TelegramClient('session_name', api_id, api_hash)
 
+
+# ANSI-коды для цветов
+COLOR_BLUE = "\033[94m"  # Синий цвет для отправленных сообщений
+COLOR_GREEN = "\033[92m"  # Зеленый цвет для полученных сообщений
+COLOR_RESET = "\033[0m"  # Сброс цвета
+
 # Функция для обработки новых сообщений
 @client.on(events.NewMessage)
 async def handler(event):
     # Выводим информацию о сообщении и отправителе
     sender = await event.get_sender()
-    print(f"New message from {sender.first_name} ({sender.id}): {event.text}")
+    print(f"\n{COLOR_GREEN}New message from {sender.first_name} ({sender.id}):\n{event.text}{COLOR_RESET}")
 
 # Функция для отправки сообщений
 async def send_message(chat_name, message):
     try:
         chat = await client.get_input_entity(chat_name)
         await client.send_message(chat, message)
-        print(f"The message has been sent to chat {chat_name}.")
+        # Выводим отправленное сообщение с отступом и синим цветом
+        print(f"{COLOR_BLUE}\n\t\t\t\t\t\t Sent to {chat_name}:\n\t\t\t\t\t\t {message}{COLOR_RESET}")
     except Exception as e:
         print(f"Error sending message: {e}")
 
@@ -45,7 +52,7 @@ async def list_chats():
 # Командный интерфейс
 async def command_interface():
     while True:
-        command = await ainput("Enter command (send, list, exit): ")  # Асинхронный ввод
+        command = await ainput("\nEnter command (send, list, exit): ")  # Асинхронный ввод
         command = command.strip().lower()
         if command == "send":
             chat_name = await ainput("Enter the chat name or ID: ")
