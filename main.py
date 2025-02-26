@@ -4,8 +4,8 @@ import os
 from aioconsole import ainput  # Асинхронный аналог input()
 
 # Значения по умолчанию
-DEFAULT_API_ID = '28392313'
-DEFAULT_API_HASH = '75d7a2c77d80c4780fa5679769bb2ae7'
+DEFAULT_API_ID = 'xxxxxxxx'
+DEFAULT_API_HASH = 'xxxxxxxxxxxxxxxxxx'
 
 # Запрос ввода данных от пользователя
 user_api_id = input(f"Enter ID (default: {DEFAULT_API_ID}): ").strip()
